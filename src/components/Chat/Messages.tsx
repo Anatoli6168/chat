@@ -55,6 +55,10 @@ export default function Messages(props: MessageProps) {
     }, [props.socket]);
 
     useEffect(() => {
+        if (area.current) area.current.scrollTop = area.current.scrollHeight - area.current.clientHeight;
+    }, [props.chat]);
+
+    useEffect(() => {
         if (props.newMyMessage.length > 0) {
             setData1(prev => [...prev, {
                 from: 'Anatoliy',

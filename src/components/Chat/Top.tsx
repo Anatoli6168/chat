@@ -41,6 +41,7 @@ const Area = styled.div<AreaProps>`
     font-size: 13px;
     background: rgba(0,0,0,0.3);
     align-items: space-between;
+    flex-shrink: 0;
 `;
 const Bar = styled.div<BarProps>`
     text-transform: uppercase;
@@ -130,7 +131,7 @@ const Ellips1 = styled(Ellips)`
     user-select: none;
     transform: rotate(-45deg);
     img {
-        
+        pointer-events: none;
         &:first-child {
             transform: rotate(45deg);
         }

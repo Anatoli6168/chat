@@ -32,6 +32,7 @@ const Input = styled(TextareaAutosize)`
 `;
 const Smiles = styled.img`
     margin: 0 20px;
+    pointer-events: none;
 `;
 
 export default function Bottom(props: ButtonProps) {
@@ -59,10 +60,14 @@ export default function Bottom(props: ButtonProps) {
         }
     }
 
+    const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
+        event.stopPropagation();
+    };
+
     return (
         <Area>
             <Input value={value} onKeyUp={handleUp} onChange={handleChange} placeholder="Напишите сообщение..." />
-            <Smiles src={emodjis} alt="" />
+            <Smiles src={emodjis} alt="" onMouseDown={handleClick}/>
         </Area>
     )
 }

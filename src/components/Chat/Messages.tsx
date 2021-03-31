@@ -7,6 +7,7 @@ import { Data } from '../../data';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io-client/build/typed-events';
 
+
 interface MessageProps {
     socket: React.MutableRefObject<Socket<DefaultEventsMap, DefaultEventsMap>>,
     newMyMessage: string,
@@ -107,8 +108,8 @@ export default function Messages(props: MessageProps) {
         <Area ref={area} onScroll={handleScroll}>
             {
                 datas[props.chat - 1].map((item, index) => {
-                    if (index === 14) return (<Message from={item.from} text={item.text} createdAt={new Date(item.createdAt)} icon={item.icon} status={item.status} key={index} id="8f43cj347f" />)
-                    if (!item.own) return (<Message from={item.from} text={item.text} createdAt={new Date(item.createdAt)} icon={item.icon} status={item.status} key={index} />)
+                    if (index === 14) return (<Message from={item.from} text={item.text} createdAt={new Date(item.createdAt)} icon={item.icon || 'btc'} status={item.status || 'admin'} key={index} id="8f43cj347f" />)
+                    if (!item.own) return (<Message from={item.from} text={item.text} createdAt={new Date(item.createdAt)} icon={item.icon || 'btc'} status={item.status || 'admin'} key={index} />)
                     else return <MyMessage text={item.text} createdAt={new Date(item.createdAt)} key={index} />;
                 })
             }

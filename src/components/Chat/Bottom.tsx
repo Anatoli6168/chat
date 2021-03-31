@@ -40,6 +40,7 @@ export default function Bottom(props: ButtonProps) {
 
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if(event.currentTarget.value[event.currentTarget.value.length - 1] === '\n') return;
         setValue(event.currentTarget.value);
     };
 
@@ -66,7 +67,7 @@ export default function Bottom(props: ButtonProps) {
 
     return (
         <Area>
-            <Input value={value} onKeyUp={handleUp} onChange={handleChange} placeholder="Напишите сообщение..." />
+            <Input value={value} onKeyDown={handleUp} onChange={handleChange} placeholder="Напишите сообщение..." />
             <Smiles src={emodjis} alt="" onMouseDown={handleClick}/>
         </Area>
     )

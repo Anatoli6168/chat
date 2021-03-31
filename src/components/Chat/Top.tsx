@@ -63,7 +63,10 @@ const Bar = styled.div<BarProps>`
         }
         &:nth-child(${props => props.select.toString()}) {
             color: white;
+            height: 26px;
+            margin-top: 14px;
             cursor: default;
+            border-bottom: 2px solid #23B838; 
         }
     }
 `;
@@ -89,13 +92,15 @@ const Select = styled.div`
     color: white;
     align-self: flex-start;
     margin: 13px 5px 0 5px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 27px 25px rgba(255, 255, 255, 0.2) inset;
 `;
 const SelectButton = styled.div<MenuProps>`
     display: flex;
     justify-content: center;
     border-radius: 17px;
     cursor: pointer;
-    width: 44px;
+    width: 50px;
     &:hover {
         background: rgba(255, 255, 255, 0.4);
     }
@@ -109,9 +114,13 @@ const Menu = styled.div<MenuProps>`
     position: relative;
 `;
 const Language = styled.div<MenuProps>`
-    margin: 5px 0 0 5px;
+    padding: 1px 0 1px 5px;
+    border-radius: 7px;
     cursor: pointer;
     ${props => props.activate ? 'display: none;' : ''}
+    &:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
 `;
 const Ellips = styled.div`
     flex-shrink:0;
@@ -146,12 +155,12 @@ const Ellips2 = styled(Ellips) <Ellips2Props>`
 `;
 
 export default function Top(props: TopProps) {
-    //const [select, setSelect] = useState(1);
     const [selectActivate, setSelectActivate] = useState(false);
     const [language, setLanguage] = useState('ru');
     const [scroll, setScroll] = useState(1);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [turn, setTurn] = useState(0);
+
     const bar = useRef<HTMLDivElement>(null);
 
     const handleSelectLanguage = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -165,6 +174,11 @@ export default function Top(props: TopProps) {
         const x = event.currentTarget.getBoundingClientRect().x - props.size.width + 10;
         const y = props.size.height + event.currentTarget.getBoundingClientRect().y + 12;
         function resize(event: MouseEvent) {
+            const scroll = bar.current?.scrollLeft;
+            if (bar.current?.scrollWidth === bar.current?.clientWidth && bar.current) {
+                bar.current.scrollLeft = 1000;
+                setScrollLeft(0);
+            }
             const width = event.pageX - x;
             const height = y - event.pageY;
             if (height <= 40) return;
@@ -172,6 +186,10 @@ export default function Top(props: TopProps) {
             props.setSize({ height, width });
             if (360 > width) setScroll(1)
             else setScroll(0)
+            if (bar.current) {
+                if (scroll === 0) bar.current.scrollLeft = 0;
+                else bar.current.scrollLeft = 1000;
+            }
         }
         document.addEventListener('mousemove', resize);
         document.addEventListener('mouseup', () => document.removeEventListener('mousemove', resize));
@@ -203,7 +221,7 @@ export default function Top(props: TopProps) {
         <Area position={!!scrollLeft}>
             <Array src={arrowSmall} alt="" scroll={!!scroll} onClick={handleScroll} position={!!scrollLeft} />
             <Bar select={props.chat} ref={bar}>
-                <div onClick={() => props.setChat(1)}>Общий</div>
+                <p onClick={() => props.setChat(1)}>Общий</p>
                 <div onClick={() => props.setChat(2)}>Клан</div>
                 <div onClick={() => props.setChat(3)}>Друзья</div>
                 <div onClick={() => props.setChat(4)}>Новости</div>
